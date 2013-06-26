@@ -10,6 +10,6 @@
 
 @interface NSString (JGAFSHA1)
 
-- (NSString*)jgaf_sha1;
+- (NSString *)jgaf_sha1;
 
 @end
