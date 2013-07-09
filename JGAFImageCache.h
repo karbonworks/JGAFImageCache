@@ -33,6 +33,7 @@ typedef enum {
 
 + (JGAFImageCache *)sharedInstance;
 - (void)imageForURL:(NSString *)url
+ failedLocalRequest:(void (^)())failedLocalBlock
          completion:(void (^)(UIImage *image, JGAFImageCacheCacheType cacheType))completion;
 - (void)clearAllData;
 - (void)saveImageToMemoryForKey:(UIImage *)image key:(NSString *)key;

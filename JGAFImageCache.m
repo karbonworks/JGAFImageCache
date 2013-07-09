@@ -66,6 +66,7 @@
 }
 
 - (void)imageForURL:(NSString *)url
+ failedLocalRequest:(void (^)())failedLocalBlock
          completion:(void (^)(UIImage *image, JGAFImageCacheCacheType cacheType))completion {
   __weak JGAFImageCache *weakSelf = self;
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -90,6 +91,11 @@
 
     // No image found, try to download it from the URL.
     if (!image) {
+      if (failedLocalBlock) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          failedLocalBlock();
+        });
+      }
       [weakSelf loadRemoteImageForURL:url key:sha1 retryCount:0 completion:completion];
     } else if (completion) {
       // Return the image we have in the completion block with the cache type.
